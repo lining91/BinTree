@@ -41,6 +41,10 @@ public:
 	void InorderRecursively( pSTreeNode pNode );	//	中序遍历，递归调用
 	void PostorderRecursively( pSTreeNode pNode );	//	后序遍历，递归调用
 
+	pSTreeNode GetMaxKey();		//	获得二叉查找树中元素值最大的节点
+	pSTreeNode GetMinKey();		//	获得二叉查找树中元素值最小的节点
+
+
 	void FreeMemory( pSTreeNode pNode );	//	释放内存
 public:
 	pSTreeNode pRoot;
@@ -299,6 +303,36 @@ void CBinTree::PostorderRecursively( pSTreeNode pNode )
 	cout << " " << pNode->key << " ";
 }
 
+pSTreeNode CBinTree::GetMaxKey()
+{
+	if ( pRoot == NULL )
+	{
+		cout << "二叉树为空！" << endl;
+		return NULL;
+	}
+
+	pSTreeNode pNode = pRoot;
+	while ( pNode->pRightChild != NULL )
+		pNode = pNode->pRightChild;
+
+	return pNode;
+}
+
+pSTreeNode CBinTree::GetMinKey()
+{
+	if ( pRoot == NULL )
+	{
+		cout << "二叉树为空！" << endl;
+		return NULL;
+	}
+
+	pSTreeNode pNode = pRoot;
+	while ( pNode->pLeftChild != NULL )
+		pNode = pNode->pLeftChild;
+
+	return pNode;
+}
+
 int main()
 {
 	CBinTree* pBinTree = new CBinTree();
@@ -336,6 +370,14 @@ int main()
 	cout << " 递归后续遍历	：";
 	pBinTree->PostorderRecursively( pRoot );
 	cout << endl;
+
+	pSTreeNode pMaxNode = pBinTree->GetMaxKey();
+	pSTreeNode pMinNode = pBinTree->GetMinKey();
+	if ( pMaxNode != NULL )
+		cout << " 该二叉查找树的最大元素是：" << pMaxNode->key << endl;
+
+	if (pMinNode != NULL )
+		cout << " 该二叉查找树的最小元素是：" << pMinNode->key << endl;
 
 	TreeKeyType DeleteKey = 15;
 	pSTreeNode pSearchNode = pBinTree->Search( DeleteKey );
